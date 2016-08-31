@@ -23,7 +23,7 @@ System.register('avatar4eg/share-social/addMetaTags', ['flarum/app', 'flarum/com
             }
             var description = '';
             if (this.discussion.startPost()) {
-                description = truncate(getPlainContent(this.discussion.startPost().contentHtml()), 150, 0);
+                description = truncate(getPlainContent(this.discussion.startPost().contentHtml()), 150, 0).replace(/\r?\n|\r/, "");
             }
 
             $('meta[name=description]').attr('content', description);

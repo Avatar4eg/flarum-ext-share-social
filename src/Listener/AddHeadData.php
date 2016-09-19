@@ -101,6 +101,15 @@ class AddHeadData
                     $post_id = $event->request->getQueryParams()['page']['near'];
                     if ($post_id === null) {
                         $data['description'] = $event->data->startPost ? $this->plainText($event->data->startPost->content, 150) : '';
+						if(preg_match('/!\[image (.*?)]/',$event->data->startPost->content,$matches))
+						{
+							$data['image'] = $matches[1]; 
+						}
+						else if(preg_match('/\[media\](.*?)\[\/media\]/',$event->data->startPost->content,$matches))
+						{
+							$data['image'] = $matches[1];
+						}
+						
                     } else {
                         $post = array_key_exists((int)$post_id - 1, $event->data->posts) ? $event->data->posts[(int)$post_id - 1] : null;
                         $data['url'] .= '/' . $post_id;
@@ -109,6 +118,14 @@ class AddHeadData
                         } else {
                             $data['description'] = $event->data->startPost ? $this->plainText($event->data->startPost->content, 150) : '';
                         }
+						if(preg_match('/!\[image (.*?)]/',$post->content,$matches))
+						{
+							$data['image'] = $matches[1];
+						}
+						else if(preg_match('/!\[image (.*?)]/',$event->data->startPost->content,$matches))
+						{
+							$data['image'] = $matches[1]; 
+						}
                     }
                     break;
 //                case $event->isController(ListDiscussionsController::class):
